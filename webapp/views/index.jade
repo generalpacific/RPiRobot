@@ -3,4 +3,13 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  button(onclick='something()') Forward
+  button(id="click", type="button", onclick="forward()") F
+
+  script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js")
+  script.
+    var forward = function() {
+      console.log("Forward request")
+        $.post("/forward", {}, function(data) {
+          console.log("Status: " + data)
+        });
+    }

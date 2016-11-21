@@ -1,0 +1,7 @@
+{
+  "KEY_PATH": <YourPrivateKeyPath>,
+  "CERT_PATH": <YourCertificatePath>,
+  "CA_PATH": <YourRootCACertificatePath>,
+  "CLIENT_ID": <YourUniqueClientIdentifier>,
+  "REGION": <YourAWSRegion> 
+}
