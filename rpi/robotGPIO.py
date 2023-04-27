@@ -8,7 +8,12 @@ motorRightpin1 = 21
 motorRightpin2 = 20
 motorLeftpin1 = 26
 motorLeftpin2 = 19
+
+# Interval between each forward and backward activations. 
 interval = 0.5 
+
+# Interval between each right / left activations. 
+# Eventually controls how much the robot turns for each command.
 turninterval = 0.3 
 
 def forwardMotorRight():
