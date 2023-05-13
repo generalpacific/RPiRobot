@@ -5,3 +5,9 @@ default hostname.
 ```
 ssh <username>@raspberrypi.local
 ```
+
+# Shutdown RPi
+
+```
+sudo shutdown now
+```
