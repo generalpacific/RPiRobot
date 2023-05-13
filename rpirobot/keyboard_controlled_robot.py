@@ -22,36 +22,39 @@ def get():
     if k!='':
       break
   if k=='\x1b[A':
-    print "up"
+    print( "up")
     robot.forward();
   elif k=='\x1b[B':
-    print "down"
+    print( "down")
     robot.reverse();
   elif k=='\x1b[C':
-    print "right"
+    print( "right")
     robot.right()
   elif k=='\x1b[D':
-    print "left"
+    print( "left")
     robot.left()
   else:
     if k=='rrr':
-      print "rotateRight"
+      print( "rotateRight")
       robot.rotateRight()
     elif k=='rrl':
-      print "rotateLeft"
+      print( "rotateLeft")
       robot.rotateLeft()
     else :
-      print "not an arrow key!"
+      print( "not an arrow key!")
       return True
   return False
 
 
 def main():
+  robot.cleanUp()
   robot.setupGPIO()
   while True:
     is_exit = get()
     if is_exit == True:
+      print("Exit is true.")
       break
+  print("Cleaning up state.")
   robot.cleanUp()
 
 if __name__ == "__main__":
