@@ -8,7 +8,7 @@ from inky.auto import auto
 
 
 PACIFRAMEDIR = "~/PaciFramePhotos"
-REFRESH_INTERVAL_SEC = 10 
+REFRESH_INTERVAL_SEC = 300 
 
 def __get_randomized_filenames(directory):
     """Return all JPG files in the specified directory in random order."""
