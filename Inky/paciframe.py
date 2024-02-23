@@ -25,7 +25,7 @@ def __get_randomized_filenames(directory):
 
 def main():
     inky = auto(ask_user=True, verbose=True)
-    saturation = 0.5
+    saturation = 0.9
 
     jpg_files = __get_randomized_filenames(PACIFRAMEDIR)
     print("""There are {num} files""".format(num=len(jpg_files)))
