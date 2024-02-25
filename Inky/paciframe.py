@@ -5,6 +5,7 @@ import os
 import time
 from PIL import Image
 from inky.auto import auto
+import random
 
 
 PACIFRAMEDIR = "~/PaciFramePhotos"
@@ -20,6 +21,7 @@ def __get_randomized_filenames(directory):
             if os.path.isfile(os.path.join(expanded_dir, file)) 
                 and (file.lower().endswith('.jpg') 
                 or file.lower().endswith('.jpeg'))]
+    random.shuffle(jpg_files)
     return jpg_files
 
 
