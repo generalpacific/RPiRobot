@@ -1,0 +1,15 @@
+[Unit]
+Description=Service to download art of the day
+After=multi-user.target
+Requires=network.target
+
+[Service]
+Type=idle
+
+User=prashant
+ExecStart=/usr/bin/python3 /home/prashant/RPiRobot/Inky/downloadartoftheday.py
+
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
