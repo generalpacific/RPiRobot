@@ -9,7 +9,7 @@ import random
 
 
 PACIFRAMEDIR = "~/PaciFramePhotos"
-REFRESH_INTERVAL_SEC = 300 
+REFRESH_INTERVAL_SEC = 120 
 
 def __get_randomized_filenames(directory):
     """Return all JPG files in the specified directory in random order."""
@@ -56,15 +56,29 @@ def main():
     jpg_files = __get_randomized_filenames(PACIFRAMEDIR)
     print("""There are {num} files""".format(num=len(jpg_files)))
 
-    for jpg_file in jpg_files:
-        print("""
-            Displaying {jpg_file}
-        """.format(jpg_file=jpg_file))
-        image = Image.open(jpg_file)
-        resizedimage = __resize_and_fill(image, inky.resolution) 
-        inky.set_image(resizedimage, saturation=saturation)
-        inky.show()
-        time.sleep(REFRESH_INTERVAL_SEC)
+
+    expanded_dir = os.path.expanduser(PACIFRAMEDIR)
+    art_of_the_day = os.path.join(expanded_dir, "artoftheday.jpeg")  
+    while True:
+        for jpg_file in jpg_files:
+            print("""
+                Displaying {jpg_file}
+            """.format(jpg_file=jpg_file))
+            image = Image.open(jpg_file)
+            resizedimage = __resize_and_fill(image, inky.resolution) 
+            inky.set_image(resizedimage, saturation=saturation)
+            inky.show()
+            time.sleep(REFRESH_INTERVAL_SEC)
+            print("""
+                Displaying artoftheday)
+            """)
+            image = Image.open(art_of_the_day)
+            resizedimage = __resize_and_fill(image, inky.resolution) 
+            inky.set_image(resizedimage, saturation=saturation)
+            inky.show()
+            time.sleep(REFRESH_INTERVAL_SEC)
+
+
 
 
 if __name__ == "__main__":

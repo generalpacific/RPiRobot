@@ -28,9 +28,8 @@ def __download_artoftheday():
     compressed_image_bytes = base64.b64decode(encoded_image_data)
     with gzip.open(io.BytesIO(compressed_image_bytes), 'rb') as f:
         decompressed_image_bytes = f.read()
-    decompressed_base64_image = base64.b64encode(decompressed_image_bytes)
     with open(save_path, 'wb') as image_file:
-        image_file.write(decompressed_base64_image)
+        image_file.write(decompressed_image_bytes)
 
     print(f"Image saved to {save_path}")
 
