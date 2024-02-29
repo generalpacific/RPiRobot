@@ -5,6 +5,8 @@ import os
 import time
 import requests
 import base64
+import gzip
+import io
 from datetime import datetime
 
 PACIFRAMEDIR = "~/PaciFramePhotos"
@@ -23,9 +25,12 @@ def __download_artoftheday():
 
     print(f"Got sucessful response from artoftheday api: {response}")
     encoded_image_data = response.json()['image']
-    image_data = base64.b64decode(encoded_image_data)
+    compressed_image_bytes = base64.b64decode(encoded_image_data)
+    with gzip.open(io.BytesIO(compressed_image_bytes), 'rb') as f:
+        decompressed_image_bytes = f.read()
+    decompressed_base64_image = base64.b64encode(decompressed_image_bytes)
     with open(save_path, 'wb') as image_file:
-        image_file.write(image_data)
+        image_file.write(decompressed_base64_image)
 
     print(f"Image saved to {save_path}")
 
