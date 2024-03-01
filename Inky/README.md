@@ -47,3 +47,12 @@ sudo systemctl status paciframe.service
 ```
 sudo systemctl is-enabled paciframe.service
 ```
+
+### Pre-prep for displaying HTML
+
+* Install `firefox-esr`
+
+```
+sudo apt install firefox-esr
+```  
+
