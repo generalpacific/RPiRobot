@@ -1,0 +1,10 @@
+[Unit]
+Description=Triggers the periodic reboot
+
+[Timer]
+OnCalendar=*-*-* 10:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
