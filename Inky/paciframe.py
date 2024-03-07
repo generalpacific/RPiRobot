@@ -20,7 +20,7 @@ def __get_randomized_filenames(directory):
     jpg_files = [os.path.join(expanded_dir, file) for file in all_items 
             if os.path.isfile(os.path.join(expanded_dir, file)) 
                 and (file.lower().endswith('.jpg') 
-                or file.lower().endswith('.jpeg'))]
+                or file.lower().endswith('.jpeg')) and not file.startswith('artoftheday')]
     random.shuffle(jpg_files)
     return jpg_files
 
@@ -58,25 +58,23 @@ def main():
 
 
     expanded_dir = os.path.expanduser(PACIFRAMEDIR)
-    art_of_the_day = os.path.join(expanded_dir, "artoftheday.jpeg")  
     while True:
         for jpg_file in jpg_files:
-            print("""
-                Displaying {jpg_file}
-            """.format(jpg_file=jpg_file))
+            print("Displaying {jpg_file}".format(jpg_file=jpg_file))
             image = Image.open(jpg_file)
             resizedimage = __resize_and_fill(image, inky.resolution) 
             inky.set_image(resizedimage, saturation=saturation)
             inky.show()
             time.sleep(REFRESH_INTERVAL_SEC)
-            print("""
-                Displaying artoftheday)
-            """)
-            image = Image.open(art_of_the_day)
-            resizedimage = __resize_and_fill(image, inky.resolution) 
-            inky.set_image(resizedimage, saturation=saturation)
-            inky.show()
-            time.sleep(REFRESH_INTERVAL_SEC)
+            print("Displaying artofthedays")
+            for i in range(3):
+                print(f"Displaying artoftheday-{i}.jpeg")
+                art_of_the_day = os.path.join(expanded_dir, f"artoftheday-{i}.jpeg")  
+                image = Image.open(art_of_the_day)
+                resizedimage = __resize_and_fill(image, inky.resolution) 
+                inky.set_image(resizedimage, saturation=saturation)
+                inky.show()
+                time.sleep(REFRESH_INTERVAL_SEC)
 
 
 
