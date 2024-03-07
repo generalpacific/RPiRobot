@@ -10,20 +10,22 @@ import io
 from datetime import datetime
 
 PACIFRAMEDIR = "~/PaciFramePhotos"
-ART_OF_THE_DAY_FILENAME = "artoftheday.jpeg"
+ART_OF_THE_DAY_FILENAME_PREFIX = "artoftheday"
 
-def __download_artoftheday():
+def __download_artoftheday(idx):
     expanded_dir = os.path.expanduser(PACIFRAMEDIR)
-    save_path = os.path.join(expanded_dir, ART_OF_THE_DAY_FILENAME)
+    save_path = os.path.join(expanded_dir, f"{ART_OF_THE_DAY_FILENAME_PREFIX}-{idx}.jpeg")
 
     current_date = datetime.now()
     formatted_date = current_date.strftime('%Y-%m-%d')
 
-    response = requests.get(f"https://6h5c17qwla.execute-api.us-east-2.amazonaws.com/prod/artoftheday?date={formatted_date}")
+    print(f"Getting art of the day for index: {idx}")
+
+    response = requests.get(f"https://6h5c17qwla.execute-api.us-east-2.amazonaws.com/prod/artoftheday?date={formatted_date}&index={idx}")
 
     response.raise_for_status()
 
-    print(f"Got sucessful response from artoftheday api: {response}")
+    print(f"Got successful response from artoftheday api: {response}")
     encoded_image_data = response.json()['image']
     compressed_image_bytes = base64.b64decode(encoded_image_data)
     with gzip.open(io.BytesIO(compressed_image_bytes), 'rb') as f:
@@ -35,7 +37,8 @@ def __download_artoftheday():
 
 
 def main():
-    __download_artoftheday()
+    for i in range(3):
+        __download_artoftheday(i)
 
 
 
