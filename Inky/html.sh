@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CWD=`pwd`
-filename=$1
+export DISPLAY=:0.0
 
-firefox --headless --screenshot --window-size=600,448 file://$CWD/$filename
+chromium-browser --headless --disable-gpu --no-sandbox --screenshot=screenshot.png --window-size=1280,720 http://www.google.com
+
 python test_display_image.py screenshot.png
