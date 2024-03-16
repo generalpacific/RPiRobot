@@ -1,0 +1,15 @@
+[Unit]
+Description=Service to create entity images
+After=multi-user.target
+Requires=network.target
+
+[Service]
+Type=idle
+
+User=prashant
+ExecStart=/usr/bin/python3 /home/prashant/RPiRobot/Inky/create_images_from_entities.py
+
+Restart=no
+
+[Install]
+WantedBy=multi-user.target

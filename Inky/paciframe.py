@@ -20,9 +20,14 @@ def __get_randomized_filenames(directory):
     jpg_files = [os.path.join(expanded_dir, file) for file in all_items 
             if os.path.isfile(os.path.join(expanded_dir, file)) 
                 and (file.lower().endswith('.jpg') 
-                or file.lower().endswith('.jpeg')) and not file.startswith('artoftheday')]
+                or file.lower().endswith('.jpeg')) and not file.startswith('artoftheday') and not file.startswith('quote')]
+    quote_files = [os.path.join(expanded_dir, file) for file in all_items 
+            if os.path.isfile(os.path.join(expanded_dir, file)) 
+                and (file.lower().endswith('.jpg') 
+                or file.lower().endswith('.jpeg')) and file.startswith('quote')]
     random.shuffle(jpg_files)
-    return jpg_files
+    random.shuffle(quote_files)
+    return (jpg_files, quote_files)
 
 
 """
@@ -53,7 +58,9 @@ def main():
     inky = auto(ask_user=True, verbose=True)
     saturation = 1
 
-    jpg_files = __get_randomized_filenames(PACIFRAMEDIR)
+    all_files = __get_randomized_filenames(PACIFRAMEDIR)
+    jpg_files = all_files[0]
+    quote_files = all_files[1]
     print("""There are {num} files""".format(num=len(jpg_files)))
 
 
@@ -76,7 +83,14 @@ def main():
                 inky.show()
                 time.sleep(REFRESH_INTERVAL_SEC)
 
-
+            print("Displaying random quote")
+            quote_file = random.choice(quote_files)
+            print(f"Displaying {quote_file}")
+            image = Image.open(quote_file)
+            resizedimage = __resize_and_fill(image, inky.resolution) 
+            inky.set_image(resizedimage, saturation=saturation)
+            inky.show()
+            time.sleep(REFRESH_INTERVAL_SEC)
 
 
 if __name__ == "__main__":
