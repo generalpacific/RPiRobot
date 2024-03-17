@@ -25,9 +25,13 @@ def __get_randomized_filenames(directory):
             if os.path.isfile(os.path.join(expanded_dir, file)) 
                 and (file.lower().endswith('.jpg') 
                 or file.lower().endswith('.jpeg')) and file.startswith('quote')]
+    art_files = [os.path.join(expanded_dir, file) for file in all_items 
+            if os.path.isfile(os.path.join(expanded_dir, file)) 
+                and (file.lower().endswith('.jpg') 
+                or file.lower().endswith('.jpeg')) and file.startswith('artoftheday')]
     random.shuffle(jpg_files)
     random.shuffle(quote_files)
-    return (jpg_files, quote_files)
+    return (jpg_files, quote_files, art_files)
 
 
 """
@@ -61,6 +65,7 @@ def main():
     all_files = __get_randomized_filenames(PACIFRAMEDIR)
     jpg_files = all_files[0]
     quote_files = all_files[1]
+    art_files = all_files[2]
     print("""There are {num} files""".format(num=len(jpg_files)))
 
 
@@ -73,15 +78,15 @@ def main():
             inky.set_image(resizedimage, saturation=saturation)
             inky.show()
             time.sleep(REFRESH_INTERVAL_SEC)
+            
             print("Displaying artofthedays")
-            for i in range(3):
-                print(f"Displaying artoftheday-{i}.jpeg")
-                art_of_the_day = os.path.join(expanded_dir, f"artoftheday-{i}.jpeg")  
-                image = Image.open(art_of_the_day)
-                resizedimage = __resize_and_fill(image, inky.resolution) 
-                inky.set_image(resizedimage, saturation=saturation)
-                inky.show()
-                time.sleep(REFRESH_INTERVAL_SEC)
+            art_file = random.choice(art_files)
+            print(f"Displaying {art_file}")
+            image = Image.open(art_file)
+            resizedimage = __resize_and_fill(image, inky.resolution) 
+            inky.set_image(resizedimage, saturation=saturation)
+            inky.show()
+            time.sleep(REFRESH_INTERVAL_SEC)
 
             print("Displaying random quote")
             quote_file = random.choice(quote_files)
