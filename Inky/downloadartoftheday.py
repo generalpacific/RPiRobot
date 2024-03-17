@@ -37,7 +37,7 @@ def __download_artoftheday(idx):
 
 
 def main():
-    for i in range(3):
+    for i in range(2):
         __download_artoftheday(i)
 
 
