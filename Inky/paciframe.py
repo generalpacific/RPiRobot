@@ -7,28 +7,36 @@ from PIL import Image
 from inky.auto import auto
 import random
 
-
 PACIFRAMEDIR = "~/PaciFramePhotos"
-REFRESH_INTERVAL_SEC = 300 
+REFRESH_INTERVAL_SEC = 300
+
 
 def __get_randomized_filenames(directory):
     """Return all JPG files in the specified directory in random order."""
     expanded_dir = os.path.expanduser(directory)
-    print("""Looking for files in {directory}""".format(directory=expanded_dir))
+    print(
+        """Looking for files in {directory}""".format(directory=expanded_dir))
     all_items = os.listdir(os.path.expanduser(directory))
-    print("""There are {num} items in {directory}""".format(num=len(all_items), directory=expanded_dir))
-    jpg_files = [os.path.join(expanded_dir, file) for file in all_items 
-            if os.path.isfile(os.path.join(expanded_dir, file)) 
-                and (file.lower().endswith('.jpg') 
-                or file.lower().endswith('.jpeg')) and not file.startswith('artoftheday') and not file.startswith('quote')]
-    quote_files = [os.path.join(expanded_dir, file) for file in all_items 
-            if os.path.isfile(os.path.join(expanded_dir, file)) 
-                and (file.lower().endswith('.jpg') 
-                or file.lower().endswith('.jpeg')) and file.startswith('quote')]
-    art_files = [os.path.join(expanded_dir, file) for file in all_items 
-            if os.path.isfile(os.path.join(expanded_dir, file)) 
-                and (file.lower().endswith('.jpg') 
-                or file.lower().endswith('.jpeg')) and file.startswith('artoftheday')]
+    print("""There are {num} items in {directory}""".format(
+        num=len(all_items), directory=expanded_dir))
+    jpg_files = [
+        os.path.join(expanded_dir, file) for file in all_items
+        if os.path.isfile(os.path.join(expanded_dir, file)) and (
+            file.lower().endswith('.jpg') or file.lower().endswith('.jpeg'))
+        and not file.startswith('artoftheday') and not file.startswith('quote')
+    ]
+    quote_files = [
+        os.path.join(expanded_dir, file) for file in all_items
+        if os.path.isfile(os.path.join(expanded_dir, file)) and (
+            file.lower().endswith('.jpg') or file.lower().endswith('.jpeg'))
+        and file.startswith('quote')
+    ]
+    art_files = [
+        os.path.join(expanded_dir, file) for file in all_items
+        if os.path.isfile(os.path.join(expanded_dir, file)) and (
+            file.lower().endswith('.jpg') or file.lower().endswith('.jpeg'))
+        and file.startswith('artoftheday')
+    ]
     random.shuffle(jpg_files)
     random.shuffle(quote_files)
     return (jpg_files, quote_files, art_files)
@@ -38,6 +46,8 @@ def __get_randomized_filenames(directory):
 Resizes the image to target_resolution maintaining the aspect ratio of the
 original image.
 """
+
+
 def __resize_and_fill(image, target_resolution):
     original_width, original_height = image.size
     target_width, target_height = target_resolution
@@ -68,22 +78,21 @@ def main():
     art_files = all_files[2]
     print("""There are {num} files""".format(num=len(jpg_files)))
 
-
     expanded_dir = os.path.expanduser(PACIFRAMEDIR)
     while True:
         for jpg_file in jpg_files:
             print("Displaying {jpg_file}".format(jpg_file=jpg_file))
             image = Image.open(jpg_file)
-            resizedimage = __resize_and_fill(image, inky.resolution) 
+            resizedimage = __resize_and_fill(image, inky.resolution)
             inky.set_image(resizedimage, saturation=saturation)
             inky.show()
             time.sleep(REFRESH_INTERVAL_SEC)
-            
+
             print("Displaying artofthedays")
             art_file = random.choice(art_files)
             print(f"Displaying {art_file}")
             image = Image.open(art_file)
-            resizedimage = __resize_and_fill(image, inky.resolution) 
+            resizedimage = __resize_and_fill(image, inky.resolution)
             inky.set_image(resizedimage, saturation=saturation)
             inky.show()
             time.sleep(REFRESH_INTERVAL_SEC)
@@ -92,7 +101,7 @@ def main():
             quote_file = random.choice(quote_files)
             print(f"Displaying {quote_file}")
             image = Image.open(quote_file)
-            resizedimage = __resize_and_fill(image, inky.resolution) 
+            resizedimage = __resize_and_fill(image, inky.resolution)
             inky.set_image(resizedimage, saturation=saturation)
             inky.show()
             time.sleep(REFRESH_INTERVAL_SEC)

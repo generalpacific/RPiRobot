@@ -3,7 +3,6 @@ import time
 
 from inky.auto import auto
 
-
 inky = auto(ask_user=True, verbose=True)
 
 colors = ['Black', 'White', 'Green', 'Blue', 'Red', 'Yellow', 'Orange']
