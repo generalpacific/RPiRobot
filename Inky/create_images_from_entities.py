@@ -22,9 +22,9 @@ def __get_entities(response):
     entities = []
     for entity in digest:
         if "highlight" in entity:
-            entities.append(entity["highlight"])
+            entities.append((entity["highlight"], entity["title"], entity["author"]))
         elif "quote" in entity:
-            entities.append(entity["quote"])
+            entities.append((entity["quote"], entity["title"], entity["author"]))
     return entities
 
 
@@ -32,7 +32,7 @@ quotes = __get_entities(response)
 PACIFRAME_DIR = os.path.expanduser(PACIFRAME_DIR)
 for index, quote in enumerate(quotes):
     print("Creating image for quote no. " + str(index))
-    text = quote
+    text = f"{quote[0]} TITLE: {quote[1]} AUTHOR: {quote[2]}"
     
     # Create a blank image
     img = Image.new('RGB', image_size, color=background_color)
