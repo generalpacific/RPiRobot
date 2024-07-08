@@ -7,7 +7,7 @@ import requests
 import base64
 import gzip
 import io
-from datetime import datetime
+from datetime import datetime, timedelta
 
 PACIFRAMEDIR = "~/PaciFramePhotos"
 ART_OF_THE_DAY_FILENAME_PREFIX = "artoftheday"
