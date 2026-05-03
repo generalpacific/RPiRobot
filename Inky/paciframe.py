@@ -72,14 +72,14 @@ def main():
     inky = auto(ask_user=True, verbose=True)
     saturation = 1
 
-    all_files = __get_randomized_filenames(PACIFRAMEDIR)
-    jpg_files = all_files[0]
-    quote_files = all_files[1]
-    art_files = all_files[2]
-    print("""There are {num} files""".format(num=len(jpg_files)))
 
     expanded_dir = os.path.expanduser(PACIFRAMEDIR)
     while True:
+        all_files = __get_randomized_filenames(PACIFRAMEDIR)
+        jpg_files = all_files[0]
+        quote_files = all_files[1]
+        art_files = all_files[2]
+        print("""There are {num} files""".format(num=len(jpg_files)))
         for jpg_file in jpg_files:
             print("Displaying {jpg_file}".format(jpg_file=jpg_file))
             image = Image.open(jpg_file)
